@@ -3,6 +3,7 @@ import { useLazyGetMoviesByGenreQuery } from "../services/movieSlice";
 import MovieCard from "./MovieCard";
 import SectionTitle from "./SectionTitle";
 import { motion } from "framer-motion";
+import Loader from "./Loader";
 
 /* eslint react/prop-types: 0 */
 function GenreMovie({ genre, genreName }) {
@@ -22,20 +23,21 @@ function GenreMovie({ genre, genreName }) {
   }, [genre, getMoviesByGenre]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   if (isError) {
     return <div>Error loading movies</div>;
   }
 
-  console.log(movieResults);
-
   // Check if data exists before destructure
 
   function handleClick() {
     setIsExpanded(!isExpanded);
-    console.log(isExpanded);
   }
 
   const notExpandedStyle = "flex gap-2";

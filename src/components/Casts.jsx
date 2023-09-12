@@ -36,7 +36,11 @@ function Casts({ casts }) {
           <motion.div layout="position" key={cast.id}>
             <div className="text-zinc-50 relative w-40 h-auto flex flex-col justify-end rounded-lg overflow-hidden">
               <img
-                src={`${imageUrl}${cast.profile_path}`}
+                src={
+                  cast.profile_path
+                    ? `${imageUrl}${cast.profile_path}`
+                    : "https://images.bhaskarassets.com/web2images/521/2023/06/23/no-photo.jpg"
+                }
                 className=" h-full"
               />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black bg-opacity-50"></div>

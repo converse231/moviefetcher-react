@@ -3,13 +3,18 @@ import { useGetPopularMoviesQuery } from "../services/movieSlice";
 import MovieCard from "./MovieCard";
 import SectionTitle from "./SectionTitle";
 import { motion } from "framer-motion";
+import Loader from "./Loader";
 
 function FeaturedMovie() {
   const { data, isLoading, isError } = useGetPopularMoviesQuery();
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   if (isError) {

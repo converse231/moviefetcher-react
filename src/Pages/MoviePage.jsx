@@ -2,30 +2,39 @@
 import {
   useLazyGetMovieCreditsQuery,
   useLazyGetMovieDetailsQuery,
+  useLazyGetMovieTrailerQuery,
 } from "../services/movieSlice";
 import Header from "../components/Header";
 import AppLayout from "../components/AppLayout";
-import { AiFillClockCircle, AiFillStar } from "react-icons/ai";
+import { AiFillClockCircle } from "react-icons/ai";
+import { LiaImdb } from "react-icons/lia";
 import GenreTag from "../components/GenreTag";
 import { BiArrowBack } from "react-icons/bi";
 import { useMoveBack } from "../hooks/useMoveBack";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 import Loader from "../components/Loader";
 import Button from "../components/Button";
 import Casts from "../components/Casts";
+import YouTube from "react-youtube";
+import SectionTitle from "../components/SectionTitle";
 
 function MoviePage() {
+  const moveBack = useMoveBack();
   const { movieId } = useParams();
   const movieDetailsId = JSON.parse(JSON.stringify(movieId));
-
   const [movieDetails, setMovieDetails] = useState();
   const [movieCredits, setMovieCredits] = useState();
+  const [movieTrailer, setMovieTrailer] = useState();
+  const [trailerKey, setTrailerKey] = useState(true);
+
   const [getMovieDetails, { isLoading, isError }] =
     useLazyGetMovieDetailsQuery();
   const [getMovieCredits, { isLoading: isFetching, isError: error }] =
     useLazyGetMovieCreditsQuery();
-  const moveBack = useMoveBack();
+  const [getMovieTrailer, { isLoading: TrailerLoading, error: TrailerError }] =
+    useLazyGetMovieTrailerQuery();
 
   useEffect(() => {
     async function fetchMovieDetails() {
@@ -40,9 +49,22 @@ function MoviePage() {
       });
       setMovieCredits(credits.cast);
     }
+    async function fetchMovieTrailer() {
+      const { data: trailer } = await getMovieTrailer({
+        movieId: movieDetailsId,
+      });
+      setMovieTrailer(trailer.results);
+    }
     fetchMovieCredits();
+    fetchMovieTrailer();
     fetchMovieDetails();
-  }, [getMovieDetails, movieDetailsId, getMovieCredits]);
+  }, [
+    getMovieDetails,
+    movieDetailsId,
+    getMovieCredits,
+    setMovieTrailer,
+    getMovieTrailer,
+  ]);
 
   if (isLoading || isFetching) {
     return <Loader />;
@@ -66,8 +88,49 @@ function MoviePage() {
   const imageUrl = `${posterBaseUrl}${imageWidth}${movieDetails.poster_path}`;
   const backdropUrl = `${posterBaseUrl}${imageWidth}${movieDetails.backdrop_path}`;
 
+  // console.log(movieTrailer);
+
+  function renderTrailer() {
+    const OfficialTrailer = movieTrailer.find(
+      (vid) => vid.name === "Official Trailer"
+    );
+    const MainTrailer = movieTrailer.find((vid) => vid.name === "Main Trailer");
+
+    let trailerKey;
+
+    if (OfficialTrailer) {
+      trailerKey = OfficialTrailer.key;
+    } else if (MainTrailer) {
+      trailerKey = MainTrailer.key;
+    } else if (movieTrailer[0]) {
+      trailerKey = movieTrailer[0].key;
+    } else {
+      // Handle the case where none of the conditions are met
+      setTrailerKey(false); // Or some other default value
+    }
+
+    console.log(trailerKey);
+
+    return (
+      <YouTube
+        opts={opts}
+        videoId={trailerKey}
+        className="w-full h-auto"
+      ></YouTube>
+    );
+  }
+
+  const opts = {
+    height: "auto",
+    width: "100%",
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 0,
+    },
+  };
+
   return (
-    <>
+    <div className="pb-12">
       <Header />
       <div className="relative">
         <img className="lg:hidden" src={imageUrl} />
@@ -97,8 +160,12 @@ function MoviePage() {
                           <p>{movieDetails.runtime} minutes</p>
                         </div>
                         <div className="flex items-center gap-2 text-zinc-50 text-2xl">
-                          <AiFillStar />
-                          <p>{movieDetails.vote_average} (imdb)</p>
+                          <LiaImdb className="text-4xl lg:text-6xl text-yellow-300" />
+                          <p>
+                            {movieDetails.vote_average === 0
+                              ? "No Ratings"
+                              : movieDetails.vote_average}{" "}
+                          </p>
                         </div>
                       </div>
                       <Button value="Watch Trailer"></Button>
@@ -129,14 +196,14 @@ function MoviePage() {
           <h1 className="text-center text-3xl font-bold text-zinc-50 ">
             {movieDetails.title}
           </h1>
-          <div className="flex justify-center gap-5 text-zinc-400 my-2">
+          <div className="flex justify-center gap-3 text-zinc-400 my-2">
             <div className="flex items-center gap-1 ">
               <AiFillClockCircle />
               <p>{movieDetails.runtime} minutes</p>
             </div>
             <div className="flex items-center gap-1 ">
-              <AiFillStar />
-              <p>{movieDetails.vote_average} (imdb)</p>
+              <LiaImdb className="text-4xl lg:text-6xl text-yellow-300" />
+              <p>{movieDetails.vote_average}</p>
             </div>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2 text-zinc-50 px-2">
@@ -147,11 +214,34 @@ function MoviePage() {
           <h4 className="text-center text-sm text-zinc-400 py-3">
             {movieDetails.overview}
           </h4>
+
+          <SectionTitle value="Watch Trailer" />
+          {!movieTrailer || TrailerError || !trailerKey ? (
+            <p className="text-zinc-300 text-center">
+              No trailer for this movie 😔
+            </p>
+          ) : TrailerLoading ? (
+            <Loader />
+          ) : (
+            renderTrailer()
+          )}
+
+          <div className="flex w-full justify-center pb-8 "></div>
           <Casts casts={casts} />
         </div>
       </AppLayout>
-    </>
+    </div>
   );
 }
 
 export default MoviePage;
+
+// {!movieTrailer || trailer === undefined ? (
+//   <p>No Trailer for Movie 😔</p>
+// ) : (
+//   <YouTube
+//     opts={opts}
+//     videoId={trailerKey}
+//     className="w-full h-auto"
+//   ></YouTube>
+// )}
