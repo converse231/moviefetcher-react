@@ -9,6 +9,7 @@ import { useMoveBack } from "../hooks/useMoveBack";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
+import Button from "../components/Button";
 
 function MoviePage() {
   const { movieId } = useParams();
@@ -48,26 +49,69 @@ function MoviePage() {
   const genres = movieDetails.genres;
 
   const posterBaseUrl = "https://image.tmdb.org/t/p";
-  const imageWidth = "/w1280/";
+  const imageWidth = "/original/";
 
   const imageUrl = `${posterBaseUrl}${imageWidth}${movieDetails.poster_path}`;
+  const backdropUrl = `${posterBaseUrl}${imageWidth}${movieDetails.backdrop_path}`;
 
   return (
     <>
-      <AppLayout>
-        <Header />
-      </AppLayout>
+      <Header />
       <div className="relative">
-        <img src={imageUrl} />
+        <img className="lg:hidden" src={imageUrl} />
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black bg-opacity-50"></div>
+          <div
+            className="hidden lg:block bg-cover h-screen"
+            style={{ backgroundImage: `url(${backdropUrl})` }}
+          >
+            <AppLayout>
+              <div className="z-30 w-full flex justify-center items-center pt-36">
+                <div className="lg:flex gap-5 z-30 items-center justify-center">
+                  <img
+                    src={imageUrl}
+                    alt="title"
+                    className="rounded-xl max-w-[32rem] mx-auto"
+                  />
+
+                  <div>
+                    <div className="w-fit flex flex-col">
+                      <h1 className="text-7xl  text-zinc-50 font-bold mb-2">
+                        {movieDetails.title}
+                      </h1>
+                      <div className="flex gap-3">
+                        <div className="flex  items-center gap-2 text-zinc-50 text-2xl">
+                          <AiFillClockCircle />
+                          <p>{movieDetails.runtime} minutes</p>
+                        </div>
+                        <div className="flex items-center gap-2 text-zinc-50 text-2xl">
+                          <AiFillStar />
+                          <p>{movieDetails.vote_average} (imdb)</p>
+                        </div>
+                      </div>
+                      <Button value="Watch Trailer"></Button>
+                      <h3 className="text-zinc-50 text-xl font-bold ">
+                        Overview
+                      </h3>
+                      <p className="text-2xl text-zinc-50">
+                        {movieDetails.overview}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </AppLayout>
+          </div>
+        </div>
         <button
           onClick={moveBack}
-          className="absolute top-4 left-4 bg-slate-50 p-2 rounded-full bg-opacity-50"
+          className="absolute z-50 top-16 left-4 bg-slate-50 p-2 rounded-full bg-opacity-50"
         >
           <BiArrowBack />
         </button>
       </div>
       <AppLayout>
-        <div className="py-3">
+        <div className="py-3 lg:hidden">
           <h1 className="text-center text-3xl font-bold text-zinc-50 ">
             {movieDetails.title}
           </h1>

@@ -2,37 +2,56 @@ import { useState } from "react";
 /* eslint react/prop-types: 0 */
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import Button from "./Button";
+import { LiaImdb } from "react-icons/lia";
 
-function HeroCard({ title, overview, poster, movieId }) {
+function HeroCard({ title, overview, poster, movieId, rating }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const posterBaseUrl = "https://image.tmdb.org/t/p";
-  const imageWidth = "/w1280/";
+  const imageWidth = "/original/";
 
   const imageUrl = `${posterBaseUrl}${imageWidth}${poster}`;
 
   return (
-    <Link to={`/${JSON.stringify(movieId)}`}>
-      <div className="w-full">
-        <div className="w-full rounded-2xl md:rounded-none overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black bg-opacity-50"></div>
-          <img src={imageUrl} className="w-full" />
-          <div className="absolute z-10 bottom-0 px-4 py-3">
+    <div className="w-full">
+      <div className=" max-h-[80vh] w-full md:rounded-none overflow-hidden relative flex justify-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black bg-opacity-50"></div>
+
+        <img src={imageUrl} className="w-full h-full" />
+        <div className="absolute z-10 bottom-0 px-4 py-3 max-w-screen-2xl md:grid grid-cols-2 xl:mb-20">
+          <div>
             <motion.h2
               layout="position"
-              className="text-zinc-50 text-xl font-bold mb-1 md:text-5xl"
+              className="text-zinc-50 text-4xl font-bold md:text-5xl py-2"
             >
               {title}
             </motion.h2>
+            <div className="flex items-center gap-2">
+              <LiaImdb className="text-4xl lg:text-6xl text-yellow-300" />
+              <p className="text-zinc-50 lg:text-xl">{rating} / 10</p>
+            </div>
+            <Link to={`/${JSON.stringify(movieId)}`}>
+              <Button
+                layout="position"
+                value="See Details"
+                variant="secondary"
+              />
+            </Link>
+            <Button layout="position" value="Watch Trailer" variant="primary" />
             <motion.div
               layout="position"
-              className={isExpanded ? "h-fit" : "md:h-8 h-5 overflow-hidden"}
+              className={
+                isExpanded ? "h-fit" : "md:h-14 lg:h-fit h-5 overflow-hidden"
+              }
             >
-              <p className="text-zinc-50 text-xs md:text-xl">{overview}</p>
+              <p className="text-zinc-50 text-md md:text-lg lg:text-3xl">
+                {overview}
+              </p>
             </motion.div>
             <motion.button
               layout="position"
-              className="text-zinc-50 text-sm"
+              className="text-zinc-50 text-sm xl:hidden"
               onClick={() => setIsExpanded(!isExpanded)}
             >
               {isExpanded ? "See less" : "See More"}
@@ -40,7 +59,7 @@ function HeroCard({ title, overview, poster, movieId }) {
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 

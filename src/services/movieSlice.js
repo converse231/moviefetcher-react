@@ -17,6 +17,10 @@ export const movieSlice = createApi({
     getPopularMovies: builder.query({
       query: () => `/movie/popular?api_key=${apiKey}`,
     }),
+    getMoviesByGenre: builder.query({
+      query: (params) =>
+        `/movie/upcoming?api_key=${apiKey}&with_genres=${params.genre}`,
+    }),
     getSearchMovies: builder.query({
       query: (params) =>
         `/search/movie?api_key=${apiKey}&query=${params.searchInput}`,
@@ -35,6 +39,7 @@ export const movieSlice = createApi({
 
 export const {
   useGetPopularMoviesQuery,
+  useLazyGetMoviesByGenreQuery,
   useLazyGetSearchMoviesQuery,
   useGetNowPlayingMoviesQuery,
   useGetDisoverMoviesQuery,

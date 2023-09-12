@@ -9,11 +9,11 @@ function MovieCard({ poster, title, releaseDate, isExpanded = true, movieId }) {
 
   return (
     <Link to={`/${JSON.stringify(movieId)}`}>
-      <motion.div
-        layout="position"
-        className=" cursor-pointer hover:scale-[.98] duration-300"
-      >
-        <div className={!isExpanded ? "w-44 md:w-64" : ""}>
+      <motion.div className=" cursor-pointer hover:scale-[.98] duration-300">
+        <motion.div
+          layout="position"
+          className={!isExpanded ? "w-44 md:w-64" : ""}
+        >
           <img
             src={
               imageUrl.endsWith("null")
@@ -29,7 +29,7 @@ function MovieCard({ poster, title, releaseDate, isExpanded = true, movieId }) {
             </h2>
             <p className="text-zinc-500 text-sm md:text-xl">{releaseDate}</p>
           </div>
-        </div>
+        </motion.div>
       </motion.div>
     </Link>
   );

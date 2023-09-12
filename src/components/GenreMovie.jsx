@@ -1,12 +1,24 @@
-import { useState } from "react";
-import { useGetPopularMoviesQuery } from "../services/movieSlice";
+import { useEffect, useState } from "react";
+import { useLazyGetMoviesByGenreQuery } from "../services/movieSlice";
 import MovieCard from "./MovieCard";
 import SectionTitle from "./SectionTitle";
 import { motion } from "framer-motion";
 
-function FeaturedMovie() {
-  const { data, isLoading, isError } = useGetPopularMoviesQuery();
+function GenreMovie({ genre, genreName }) {
+  const [getMoviesByGenre, { isLoading, isError }] =
+    useLazyGetMoviesByGenreQuery();
+  const [movieResults, setMovieResults] = useState([]);
   const [isExpanded, setIsExpanded] = useState(false);
+
+  useEffect(() => {
+    async function getMovies() {
+      const { data } = await getMoviesByGenre({
+        genre: genre,
+      });
+      setMovieResults(data.results);
+    }
+    getMovies();
+  }, [genre, getMoviesByGenre]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -16,12 +28,9 @@ function FeaturedMovie() {
     return <div>Error loading movies</div>;
   }
 
-  // Check if data exists before destructure
-  if (!data || !data.results) {
-    return <div>No movie data available</div>;
-  }
+  console.log(movieResults);
 
-  const PopMovies = data.results;
+  // Check if data exists before destructure
 
   function handleClick() {
     setIsExpanded(!isExpanded);
@@ -34,7 +43,7 @@ function FeaturedMovie() {
   return (
     <div className="mt-4">
       <div className="flex justify-between items-center mb-3">
-        <SectionTitle value="Popular Movies" />
+        <SectionTitle value={genreName} />
         <button
           onClick={() => handleClick()}
           className="hover:underline underline-offset-4 text-zinc-50 font-semibold transition-all duration-1000"
@@ -45,7 +54,7 @@ function FeaturedMovie() {
 
       <motion.div className="overflow-x-scroll md:scrollbar-rounded-xl md:scrollbar-thumb-zinc-600 md:scrollbar-thin relative">
         <motion.div className={isExpanded ? expandedStyle : notExpandedStyle}>
-          {PopMovies.map((PopMovie) => (
+          {movieResults.map((PopMovie) => (
             <MovieCard
               isExpanded={isExpanded}
               key={PopMovie.id}
@@ -61,4 +70,4 @@ function FeaturedMovie() {
   );
 }
 
-export default FeaturedMovie;
+export default GenreMovie;

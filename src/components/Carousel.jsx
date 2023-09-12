@@ -34,6 +34,7 @@ function MovieCarousel() {
                 title={NowPlayingMovie.title}
                 poster={NowPlayingMovie.backdrop_path}
                 overview={NowPlayingMovie.overview}
+                rating={NowPlayingMovie.vote_average}
               />
             </CCarouselItem>
           ))}
@@ -49,6 +50,7 @@ function MovieCarousel() {
                 title={NowPlayingMovie.title}
                 poster={NowPlayingMovie.poster_path}
                 overview={NowPlayingMovie.overview}
+                rating={NowPlayingMovie.vote_average}
               />
             </CCarouselItem>
           ))}
