@@ -1,5 +1,8 @@
 // import { useNavigate } from "react-router-dom";
-import { useLazyGetMovieDetailsQuery } from "../services/movieSlice";
+import {
+  useLazyGetMovieCreditsQuery,
+  useLazyGetMovieDetailsQuery,
+} from "../services/movieSlice";
 import Header from "../components/Header";
 import AppLayout from "../components/AppLayout";
 import { AiFillClockCircle, AiFillStar } from "react-icons/ai";
@@ -10,14 +13,18 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
 import Button from "../components/Button";
+import Casts from "../components/Casts";
 
 function MoviePage() {
   const { movieId } = useParams();
   const movieDetailsId = JSON.parse(JSON.stringify(movieId));
 
   const [movieDetails, setMovieDetails] = useState();
+  const [movieCredits, setMovieCredits] = useState();
   const [getMovieDetails, { isLoading, isError }] =
     useLazyGetMovieDetailsQuery();
+  const [getMovieCredits, { isLoading: isFetching, isError: error }] =
+    useLazyGetMovieCreditsQuery();
   const moveBack = useMoveBack();
 
   useEffect(() => {
@@ -27,27 +34,32 @@ function MoviePage() {
       });
       setMovieDetails(movieData);
     }
-
+    async function fetchMovieCredits() {
+      const { data: credits } = await getMovieCredits({
+        movieId: movieDetailsId,
+      });
+      setMovieCredits(credits.cast);
+    }
+    fetchMovieCredits();
     fetchMovieDetails();
-  }, [getMovieDetails, movieDetailsId]);
+  }, [getMovieDetails, movieDetailsId, getMovieCredits]);
 
-  console.log(movieDetails);
-
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Loader />;
   }
 
-  if (isError) {
+  if (isError || error) {
     return <div>Error loading movies</div>;
   }
 
   // Check if data exists before destructure
-  if (!movieDetails) {
+  if (!movieDetails || !movieCredits) {
     return <div>No movie data available</div>;
   }
 
   const genres = movieDetails.genres;
 
+  const casts = movieCredits > 10 ? movieCredits.slice(0, 10) : movieCredits;
   const posterBaseUrl = "https://image.tmdb.org/t/p";
   const imageWidth = "/original/";
 
@@ -71,7 +83,7 @@ function MoviePage() {
                   <img
                     src={imageUrl}
                     alt="title"
-                    className="rounded-xl max-w-[32rem] mx-auto"
+                    className="rounded-xl max-w-[32rem] mx-auto shadow-md"
                   />
 
                   <div>
@@ -94,7 +106,9 @@ function MoviePage() {
                         Overview
                       </h3>
                       <p className="text-2xl text-zinc-50">
-                        {movieDetails.overview}
+                        {movieDetails.overview
+                          ? movieDetails.overview
+                          : "There is no overview for this movie yet"}
                       </p>
                     </div>
                   </div>
@@ -133,6 +147,7 @@ function MoviePage() {
           <h4 className="text-center text-sm text-zinc-400 py-3">
             {movieDetails.overview}
           </h4>
+          <Casts casts={casts} />
         </div>
       </AppLayout>
     </>

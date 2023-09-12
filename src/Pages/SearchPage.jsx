@@ -41,40 +41,44 @@ function SearchPage() {
   const discoverMovies = !searchOutput ? data.results : searchOutput;
 
   return (
-    <AppLayout>
-      <div className="pb-[8rem]">
-        <Header />
-        <form
-          className="flex items-center bg-zinc-100 py-2 px-4 rounded-full mt-3 mb-4"
-          onSubmit={handleSubmit}
-        >
-          <input
-            className="placeholder:italic placeholder:text-slate-400 block  w-full bg-transparent rounded-xl  sm:text-lg outline-none"
-            placeholder="Search movie..."
-            type="text"
-            name="search"
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <FiSearch className="text-2xl text-zinc-900" />
-        </form>
+    <>
+      <Header />
+      <AppLayout>
+        <div className="py-[4rem]">
+          <form
+            className="flex items-center bg-zinc-100 py-2 px-4 rounded-full mt-3 mb-4"
+            onSubmit={handleSubmit}
+          >
+            <input
+              className="placeholder:italic placeholder:text-slate-400 block  w-full bg-transparent rounded-xl  sm:text-lg outline-none"
+              placeholder="Search movie..."
+              type="text"
+              name="search"
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <FiSearch className="text-2xl text-zinc-900" />
+          </form>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mt-3">
-          {isLoading || isFetching ? (
-            <Loader />
-          ) : (
-            discoverMovies.map((movie) => (
-              <MovieCard
-                key={movie.id}
-                movieId={movie.id}
-                poster={movie.poster_path}
-                title={movie.title}
-                releaseDate={movie.release_date}
-              />
-            ))
-          )}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mt-3">
+            {isLoading || isFetching ? (
+              <div className="w-full h-screen flex justify-center items-center">
+                <Loader />
+              </div>
+            ) : (
+              discoverMovies.map((movie) => (
+                <MovieCard
+                  key={movie.id}
+                  movieId={movie.id}
+                  poster={movie.poster_path}
+                  title={movie.title}
+                  releaseDate={movie.release_date}
+                />
+              ))
+            )}
+          </div>
         </div>
-      </div>
-    </AppLayout>
+      </AppLayout>
+    </>
   );
 }
 

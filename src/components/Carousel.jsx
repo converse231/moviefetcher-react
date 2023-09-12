@@ -22,7 +22,7 @@ function MovieCarousel() {
     return <div>No movie data available</div>;
   }
 
-  const NowPlayingMovies = data.results.slice(0, 10);
+  const NowPlayingMovies = data.results.slice(0, 20);
 
   return (
     <div className="relative">
@@ -35,6 +35,7 @@ function MovieCarousel() {
                 poster={NowPlayingMovie.backdrop_path}
                 overview={NowPlayingMovie.overview}
                 rating={NowPlayingMovie.vote_average}
+                movieId={NowPlayingMovie.id}
               />
             </CCarouselItem>
           ))}

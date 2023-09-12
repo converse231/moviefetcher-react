@@ -4,6 +4,7 @@ import MovieCard from "./MovieCard";
 import SectionTitle from "./SectionTitle";
 import { motion } from "framer-motion";
 
+/* eslint react/prop-types: 0 */
 function GenreMovie({ genre, genreName }) {
   const [getMoviesByGenre, { isLoading, isError }] =
     useLazyGetMoviesByGenreQuery();

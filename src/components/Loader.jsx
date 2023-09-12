@@ -3,8 +3,8 @@ import Lottie from "lottie-react";
 
 function Loader() {
   return (
-    <div className="flex justify-center items-center h-screen">
-      <Lottie animationData={Loading} className="w-screen h-auto" />
+    <div className="mx-auto flex justify-center items-center h-screen">
+      <Lottie animationData={Loading} className="w-32 h-32" />
     </div>
   );
 }

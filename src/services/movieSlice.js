@@ -34,11 +34,15 @@ export const movieSlice = createApi({
     getMovieDetails: builder.query({
       query: (params) => `/movie/${params.movieId}?api_key=${apiKey}`,
     }),
+    getMovieCredits: builder.query({
+      query: (params) => `/movie/${params.movieId}/credits?api_key=${apiKey}`,
+    }),
   }),
 });
 
 export const {
   useGetPopularMoviesQuery,
+  useLazyGetMovieCreditsQuery,
   useLazyGetMoviesByGenreQuery,
   useLazyGetSearchMoviesQuery,
   useGetNowPlayingMoviesQuery,
