@@ -21,6 +21,7 @@ import YouTube from "react-youtube";
 import SectionTitle from "../components/SectionTitle";
 import TrailerModal from "../components/TrailerModal";
 import Footer from "../components/Footer";
+import GenreMovie from "../components/GenreMovie";
 
 function MoviePage() {
   const moveBack = useMoveBack();
@@ -92,6 +93,8 @@ function MoviePage() {
 
   const genres = movieDetails.genres;
 
+  console.log(genres);
+
   const casts = movieCredits > 10 ? movieCredits.slice(0, 10) : movieCredits;
   const posterBaseUrl = "https://image.tmdb.org/t/p";
   const imageWidth = "/original/";
@@ -157,15 +160,16 @@ function MoviePage() {
       </TrailerModal>
       <div className="relative">
         <img className="lg:hidden" src={imageUrl} />
+
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black bg-opacity-50"></div>
           <div
-            className="hidden lg:block bg-cover h-fit 2xl:h-screen"
+            className="hidden lg:block bg-cover h-fit "
             style={{ backgroundImage: `url(${backdropUrl})` }}
           >
-            <div className="max-w-xl mx-auto">
-              <div className="z-30 w-full flex justify-center items-center lg:py-16 xl:py-32">
-                <div className="lg:flex gap-5 z-30 items-center justify-center">
+            <AppLayout>
+              <div className=" w-full flex justify-center items-center lg:py-16 xl:py-32">
+                <div className="lg:flex gap-4 z-30 items-center justify-center">
                   <img
                     src={imageUrl}
                     alt="title"
@@ -215,7 +219,7 @@ function MoviePage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </AppLayout>
           </div>
         </div>
         <button
@@ -225,11 +229,7 @@ function MoviePage() {
           <BiArrowBack />
         </button>
       </div>
-      {/* <AppLayout>
-        <div>
-          <SectionTitle value="Similar Movies" />
-        </div>
-      </AppLayout> */}
+
       <AppLayout>
         <div className="py-3 lg:hidden">
           <h1 className="text-center text-3xl font-bold text-zinc-50 ">
@@ -265,10 +265,15 @@ function MoviePage() {
             renderTrailer()
           )}
 
-          <div className="flex w-full justify-center pb-8 "></div>
           <Casts casts={casts} />
         </div>
       </AppLayout>
+      <AppLayout>
+        <div>
+          <GenreMovie genre={genres[1].id} genreName="Similar Movies" />
+        </div>
+      </AppLayout>
+
       <Footer />
     </div>
   );
