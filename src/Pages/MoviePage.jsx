@@ -159,11 +159,11 @@ function MoviePage() {
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black bg-opacity-50"></div>
           <div
-            className="hidden lg:block bg-cover h-screen"
+            className="hidden lg:block bg-cover h-full 2xl:h-screen"
             style={{ backgroundImage: `url(${backdropUrl})` }}
           >
             <AppLayout>
-              <div className="z-30 w-full flex justify-center items-center lg:pt-36 xl:pt-36">
+              <div className="z-30 w-full flex justify-center items-center lg:py-16 xl:py-32">
                 <div className="lg:flex gap-5 z-30 items-center justify-center">
                   <img
                     src={imageUrl}

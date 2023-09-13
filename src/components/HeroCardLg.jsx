@@ -15,7 +15,7 @@ function HeroCard({ title, overview, poster, movieId, rating }) {
 
   return (
     <div className="w-full">
-      <div className=" max-h-[80vh] w-full md:rounded-none overflow-hidden relative flex justify-center">
+      <div className=" 2xl:max-h-[80vh] h-90% w-full md:rounded-none overflow-hidden relative flex justify-center">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black bg-opacity-50"></div>
 
         <img src={imageUrl} className="w-full h-full" />
@@ -23,7 +23,7 @@ function HeroCard({ title, overview, poster, movieId, rating }) {
           <div>
             <motion.h2
               layout="position"
-              className="text-zinc-50 text-4xl font-bold md:text-5xl py-2"
+              className="text-zinc-50 lg:text-4xl font-bold md:text-4xl py-2"
             >
               {title}
             </motion.h2>
@@ -44,7 +44,7 @@ function HeroCard({ title, overview, poster, movieId, rating }) {
                 isExpanded ? "h-fit" : "md:h-14 lg:h-fit h-5 overflow-hidden"
               }
             >
-              <p className="text-zinc-50 text-md md:text-lg lg:text-3xl py-3">
+              <p className="text-zinc-50 text-md md:text-sm lg:text-xl py-3">
                 {overview}
               </p>
             </motion.div>
