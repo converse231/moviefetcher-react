@@ -8,7 +8,7 @@ function Header() {
 
   return (
     <div className="absolute z-50 w-full">
-      <header className="max-w-screen-2xl bg-transparent mx-auto z-50 py-3 px-4 md:px-0 w-full">
+      <header className="max-w-screen-xl bg-transparent mx-auto z-50 py-3 px-4 md:px-0 w-full">
         <div className="flex items-center justify-between">
           <Link to="/">
             <h1 className="text-4xl font-bold text-slate-50">MovSavvy</h1>

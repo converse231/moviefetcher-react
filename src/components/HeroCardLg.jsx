@@ -19,7 +19,7 @@ function HeroCard({ title, overview, poster, movieId, rating }) {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black bg-opacity-50"></div>
 
         <img src={imageUrl} className="w-full h-full" />
-        <div className="absolute z-10 bottom-0 px-4 py-3 max-w-screen-2xl md:grid grid-cols-2 xl:mb-20">
+        <div className="absolute z-10 bottom-0 px-4 py-3 max-w-screen-xl md:grid grid-cols-2 xl:mb-20">
           <div>
             <motion.h2
               layout="position"

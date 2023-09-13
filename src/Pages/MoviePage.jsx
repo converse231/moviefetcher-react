@@ -163,13 +163,13 @@ function MoviePage() {
             className="hidden lg:block bg-cover h-fit 2xl:h-screen"
             style={{ backgroundImage: `url(${backdropUrl})` }}
           >
-            <AppLayout>
+            <div className="max-w-xl mx-auto">
               <div className="z-30 w-full flex justify-center items-center lg:py-16 xl:py-32">
                 <div className="lg:flex gap-5 z-30 items-center justify-center">
                   <img
                     src={imageUrl}
                     alt="title"
-                    className="rounded-xl w-[16rem] xl:w-[22rem] 2xl:w-[34rem] mx-auto shadow-md"
+                    className="rounded-xl w-[16rem] xl:w-[22rem] 2xl:w-[28rem] mx-auto shadow-md"
                   />
 
                   <div>
@@ -215,7 +215,7 @@ function MoviePage() {
                   </div>
                 </div>
               </div>
-            </AppLayout>
+            </div>
           </div>
         </div>
         <button
