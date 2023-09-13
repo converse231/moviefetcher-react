@@ -20,6 +20,7 @@ import Casts from "../components/Casts";
 import YouTube from "react-youtube";
 import SectionTitle from "../components/SectionTitle";
 import TrailerModal from "../components/TrailerModal";
+import Footer from "../components/Footer";
 
 function MoviePage() {
   const moveBack = useMoveBack();
@@ -159,7 +160,7 @@ function MoviePage() {
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black bg-opacity-50"></div>
           <div
-            className="hidden lg:block bg-cover h-full 2xl:h-screen"
+            className="hidden lg:block bg-cover h-fit 2xl:h-screen"
             style={{ backgroundImage: `url(${backdropUrl})` }}
           >
             <AppLayout>
@@ -203,12 +204,12 @@ function MoviePage() {
                       <h3 className="text-zinc-50 text-xl font-bold ">
                         Overview
                       </h3>
-                      <p className="xl:text-2xl lg:text-lg text-zinc-50">
+                      <p className="xl:text-2xl lg:text-sm text-zinc-50">
                         {movieDetails.overview
                           ? movieDetails.overview
                           : "There is no overview for this movie yet"}
                       </p>
-                      <div className="flex w-full justify-center pb-8 "></div>
+
                       <Casts casts={casts} />
                     </div>
                   </div>
@@ -268,6 +269,7 @@ function MoviePage() {
           <Casts casts={casts} />
         </div>
       </AppLayout>
+      <Footer />
     </div>
   );
 }
