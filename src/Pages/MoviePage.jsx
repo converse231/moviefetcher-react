@@ -276,7 +276,7 @@ function MoviePage() {
       </AppLayout>
       <AppLayout>
         <div>
-          <GenreMovie genre={genres[1].id} genreName="Similar Movies" />
+          <GenreMovie genre={genres[0].id} genreName="Similar Movies" />
         </div>
       </AppLayout>
 
