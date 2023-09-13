@@ -163,17 +163,17 @@ function MoviePage() {
             style={{ backgroundImage: `url(${backdropUrl})` }}
           >
             <AppLayout>
-              <div className="z-30 w-full flex justify-center items-center pt-36">
+              <div className="z-30 w-full flex justify-center items-center xl:pt-36">
                 <div className="lg:flex gap-5 z-30 items-center justify-center">
                   <img
                     src={imageUrl}
                     alt="title"
-                    className="rounded-xl max-w-[32rem] mx-auto shadow-md"
+                    className="rounded-xl w-[20rem] xl:w-[24rem] 2xl:w-[34rem] mx-auto shadow-md"
                   />
 
                   <div>
                     <div className="w-fit flex flex-col">
-                      <h1 className="text-7xl  text-zinc-50 font-bold mb-2">
+                      <h1 className="2xl:text-7xl lg:text-4xl  text-zinc-50 font-bold mb-2">
                         {movieDetails.title}
                       </h1>
                       <div className="flex gap-3">
@@ -203,7 +203,7 @@ function MoviePage() {
                       <h3 className="text-zinc-50 text-xl font-bold ">
                         Overview
                       </h3>
-                      <p className="text-2xl text-zinc-50">
+                      <p className="xl:text-2xl lg:text-lg text-zinc-50">
                         {movieDetails.overview
                           ? movieDetails.overview
                           : "There is no overview for this movie yet"}

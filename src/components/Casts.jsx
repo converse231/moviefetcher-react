@@ -10,10 +10,10 @@ function Casts({ casts }) {
   const imageWidth = "/w154/";
   const imageUrl = `${posterBaseUrl}${imageWidth}`;
 
-  const castsMembers = casts.slice(0, 8);
+  const castsMembers = casts.slice(0, 6);
 
   const notExpandedStyle =
-    "flex gap-2 w-full overflow-x-scroll md:scrollbar-thumb-zinc-600 md:scrollbar-thin relative";
+    "flex gap-2 w-full overflow-x-scroll lg:scrollbar-thumb-zinc-600 lg:scrollbar-thin relative";
   const expandedStyle = "grid grid-cols-2 gap-2";
 
   function handleClick() {
@@ -35,19 +35,19 @@ function Casts({ casts }) {
       <div className={isExpanded ? expandedStyle : notExpandedStyle}>
         {castsMembers.map((cast) => (
           <motion.div layout="position" key={cast.id}>
-            <div className="text-zinc-50 relative w-40 h-auto flex flex-col justify-end rounded-lg overflow-hidden">
+            <div className="text-zinc-50 relative w-40 lg:w-20 xl:w-36 2xl:w-40 h-auto flex flex-col justify-end rounded-lg overflow-hidden">
               <img
                 src={
                   cast.profile_path
                     ? `${imageUrl}${cast.profile_path}`
                     : "https://images.bhaskarassets.com/web2images/521/2023/06/23/no-photo.jpg"
                 }
-                className=" h-full"
+                className="h-full shadow-md"
               />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black bg-opacity-50"></div>
               <div className="z-50 absolute p-2">
-                <p className="font-bold text-xl">{cast.name}</p>
-                <p className="text-zinc-300">as {cast.character}</p>
+                <p className="font-bold text-lg  lg:text-sm">{cast.name}</p>
+                <p className="text-zinc-300 lg:text-sm">as {cast.character}</p>
               </div>
             </div>
           </motion.div>
