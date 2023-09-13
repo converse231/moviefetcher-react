@@ -1,5 +1,6 @@
 import AppLayout from "../components/AppLayout";
 import FeaturedMovie from "../components/FeaturedMovie";
+import Footer from "../components/Footer";
 import GenreMovie from "../components/GenreMovie";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
@@ -19,6 +20,7 @@ function Homepage() {
         <GenreMovie genre={16} genreName="Animation" />
         <GenreMovie genre={35} genreName="Comedy" />
       </AppLayout>
+      <Footer />
     </>
   );
 }

@@ -1,4 +1,3 @@
-import { useState } from "react";
 /* eslint react/prop-types: 0 */
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -6,8 +5,6 @@ import Button from "./Button";
 import { LiaImdb } from "react-icons/lia";
 
 function HeroCard({ title, overview, poster, movieId, rating }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
   const posterBaseUrl = "https://image.tmdb.org/t/p";
   const imageWidth = "/original/";
 
@@ -38,23 +35,11 @@ function HeroCard({ title, overview, poster, movieId, rating }) {
                 variant="secondary"
               />
             </Link>
-            <motion.div
-              layout="position"
-              className={
-                isExpanded ? "h-fit" : "md:h-14 lg:h-fit h-5 overflow-hidden"
-              }
-            >
+            <motion.div layout="position" className="h-fit">
               <p className="text-zinc-50 text-md md:text-sm lg:text-xl py-3">
                 {overview}
               </p>
             </motion.div>
-            <motion.button
-              layout="position"
-              className="text-zinc-50 text-sm xl:hidden"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
-              {isExpanded ? "See less" : "See More"}
-            </motion.button>
           </div>
         </div>
       </div>
