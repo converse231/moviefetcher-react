@@ -4,7 +4,7 @@ import {
   useLazyGetMovieDetailsQuery,
   useLazyGetMovieTrailerQuery,
 } from "../services/movieSlice";
-import Header from "../components/Header";
+
 import AppLayout from "../components/AppLayout";
 import { AiFillClockCircle } from "react-icons/ai";
 import { LiaImdb } from "react-icons/lia";
@@ -15,10 +15,11 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Loader from "../components/Loader";
-import Button from "../components/Button";
+// import Button from "../components/Button";
 import Casts from "../components/Casts";
 import YouTube from "react-youtube";
 import SectionTitle from "../components/SectionTitle";
+import TrailerModal from "../components/TrailerModal";
 
 function MoviePage() {
   const moveBack = useMoveBack();
@@ -28,6 +29,15 @@ function MoviePage() {
   const [movieCredits, setMovieCredits] = useState();
   const [movieTrailer, setMovieTrailer] = useState();
   const [trailerKey, setTrailerKey] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const [getMovieDetails, { isLoading, isError }] =
     useLazyGetMovieDetailsQuery();
@@ -90,6 +100,15 @@ function MoviePage() {
 
   // console.log(movieTrailer);
 
+  const opts = {
+    height: "100%",
+    width: "100%",
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 0,
+    },
+  };
+
   function renderTrailer() {
     const OfficialTrailer = movieTrailer.find(
       (vid) => vid.name === "Official Trailer"
@@ -109,29 +128,32 @@ function MoviePage() {
       setTrailerKey(false); // Or some other default value
     }
 
-    console.log(trailerKey);
-
     return (
       <YouTube
         opts={opts}
         videoId={trailerKey}
-        className="w-full h-auto"
+        className="h-full w-full"
       ></YouTube>
     );
   }
 
-  const opts = {
-    height: "auto",
-    width: "100%",
-    playerVars: {
-      // https://developers.google.com/youtube/player_parameters
-      autoplay: 0,
-    },
-  };
-
   return (
-    <div className="pb-12">
-      <Header />
+    <div className="relative">
+      <TrailerModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        trailerUrl="https://www.youtube.com/embed/VIDEO_ID_HERE"
+      >
+        {!movieTrailer || TrailerError || !trailerKey ? (
+          <p className="text-zinc-300 text-center">
+            No trailer for this movie 😔
+          </p>
+        ) : TrailerLoading ? (
+          <Loader />
+        ) : (
+          renderTrailer()
+        )}
+      </TrailerModal>
       <div className="relative">
         <img className="lg:hidden" src={imageUrl} />
         <div className="relative">
@@ -168,7 +190,16 @@ function MoviePage() {
                           </p>
                         </div>
                       </div>
-                      <Button value="Watch Trailer"></Button>
+                      {/* <Button
+                        value="Watch Trailer"
+                        onClick={openModal}
+                      ></Button> */}
+                      <button
+                        className="px-2 py-1 border text-sm text-zinc-50 border-zinc-50 hover:bg-zinc-50 hover:text-zinc-950 duration-300 my-1 rounded-md md:text-xl m w-fit"
+                        onClick={openModal}
+                      >
+                        Watch Trailer
+                      </button>
                       <h3 className="text-zinc-50 text-xl font-bold ">
                         Overview
                       </h3>
@@ -177,6 +208,8 @@ function MoviePage() {
                           ? movieDetails.overview
                           : "There is no overview for this movie yet"}
                       </p>
+                      <div className="flex w-full justify-center pb-8 "></div>
+                      <Casts casts={casts} />
                     </div>
                   </div>
                 </div>
@@ -186,11 +219,16 @@ function MoviePage() {
         </div>
         <button
           onClick={moveBack}
-          className="absolute z-50 top-16 left-4 bg-slate-50 p-2 rounded-full bg-opacity-50"
+          className="absolute z-50 top-8 left-4 bg-slate-50 p-2 rounded-full bg-opacity-50 lg:text-4xl"
         >
           <BiArrowBack />
         </button>
       </div>
+      {/* <AppLayout>
+        <div>
+          <SectionTitle value="Similar Movies" />
+        </div>
+      </AppLayout> */}
       <AppLayout>
         <div className="py-3 lg:hidden">
           <h1 className="text-center text-3xl font-bold text-zinc-50 ">
@@ -235,13 +273,3 @@ function MoviePage() {
 }
 
 export default MoviePage;
-
-// {!movieTrailer || trailer === undefined ? (
-//   <p>No Trailer for Movie 😔</p>
-// ) : (
-//   <YouTube
-//     opts={opts}
-//     videoId={trailerKey}
-//     className="w-full h-auto"
-//   ></YouTube>
-// )}

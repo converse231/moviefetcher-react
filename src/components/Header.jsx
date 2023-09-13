@@ -11,9 +11,7 @@ function Header() {
       <header className="max-w-screen-2xl bg-transparent mx-auto z-50 py-3 px-4 md:px-0 w-full">
         <div className="flex items-center justify-between">
           <Link to="/">
-            <h1 className="text-4xl font-bold text-slate-50 shadow-lg">
-              MovSavvy
-            </h1>
+            <h1 className="text-4xl font-bold text-slate-50">MovSavvy</h1>
           </Link>
           <div className="flex justify-center items-center gap-3">
             <Link to="/search">

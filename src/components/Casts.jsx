@@ -12,7 +12,8 @@ function Casts({ casts }) {
 
   const castsMembers = casts.slice(0, 8);
 
-  const notExpandedStyle = "flex gap-2 w-full overflow-x-scroll";
+  const notExpandedStyle =
+    "flex gap-2 w-full overflow-x-scroll md:scrollbar-thumb-zinc-600 md:scrollbar-thin relative";
   const expandedStyle = "grid grid-cols-2 gap-2";
 
   function handleClick() {
@@ -26,7 +27,7 @@ function Casts({ casts }) {
         <SectionTitle value="Casts" />
         <button
           onClick={() => handleClick()}
-          className="hover:underline underline-offset-4 text-zinc-50 font-semibold transition-all duration-1000"
+          className="hover:underline underline-offset-4 text-zinc-50 font-semibold transition-all duration-1000 lg:hidden"
         >
           {isExpanded ? "Collapse" : "See More"}
         </button>

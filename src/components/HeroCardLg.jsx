@@ -38,7 +38,6 @@ function HeroCard({ title, overview, poster, movieId, rating }) {
                 variant="secondary"
               />
             </Link>
-            <Button layout="position" value="Watch Trailer" variant="primary" />
             <motion.div
               layout="position"
               className={
