@@ -44,7 +44,7 @@ function HeroCard({ title, overview, poster, movieId, rating }) {
                 isExpanded ? "h-fit" : "md:h-14 lg:h-fit h-5 overflow-hidden"
               }
             >
-              <p className="text-zinc-50 text-md md:text-lg lg:text-3xl">
+              <p className="text-zinc-50 text-md md:text-lg lg:text-3xl py-3">
                 {overview}
               </p>
             </motion.div>

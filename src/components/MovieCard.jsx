@@ -12,7 +12,7 @@ function MovieCard({ poster, title, releaseDate, isExpanded = true, movieId }) {
       <motion.div className=" cursor-pointer hover:scale-[.98] duration-300">
         <motion.div
           layout="position"
-          className={!isExpanded ? "w-44 md:w-64" : ""}
+          className={!isExpanded ? "w-32 md:w-52" : ""}
         >
           <img
             src={
@@ -24,7 +24,7 @@ function MovieCard({ poster, title, releaseDate, isExpanded = true, movieId }) {
             className="rounded-2xl "
           />
           <div className="py-1">
-            <h2 className="text-lg text-zinc-50 truncate font-medium md:text-3xl py-2">
+            <h2 className="text-lg text-zinc-50 truncate font-medium md:text-2xl py-2">
               {title}
             </h2>
             <p className="text-zinc-500 text-sm md:text-xl">{releaseDate}</p>

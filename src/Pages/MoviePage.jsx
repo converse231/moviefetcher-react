@@ -168,7 +168,7 @@ function MoviePage() {
                   <img
                     src={imageUrl}
                     alt="title"
-                    className="rounded-xl w-[20rem] xl:w-[24rem] 2xl:w-[34rem] mx-auto shadow-md"
+                    className="rounded-xl w-[16rem] xl:w-[22rem] 2xl:w-[34rem] mx-auto shadow-md"
                   />
 
                   <div>

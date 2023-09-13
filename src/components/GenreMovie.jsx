@@ -41,7 +41,7 @@ function GenreMovie({ genre, genreName }) {
   }
 
   const notExpandedStyle = "flex gap-2";
-  const expandedStyle = "grid grid-cols-2 gap-2 md:grid-cols-5 ";
+  const expandedStyle = "grid grid-cols-2 gap-2 md:grid-cols-7 ";
 
   return (
     <div className="mt-4">
