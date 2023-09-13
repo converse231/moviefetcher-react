@@ -163,7 +163,7 @@ function MoviePage() {
             style={{ backgroundImage: `url(${backdropUrl})` }}
           >
             <AppLayout>
-              <div className="z-30 w-full flex justify-center items-center xl:pt-36">
+              <div className="z-30 w-full flex justify-center items-center lg:pt-36 xl:pt-36">
                 <div className="lg:flex gap-5 z-30 items-center justify-center">
                   <img
                     src={imageUrl}

@@ -10,7 +10,7 @@ function Casts({ casts }) {
   const imageWidth = "/w154/";
   const imageUrl = `${posterBaseUrl}${imageWidth}`;
 
-  const castsMembers = casts.slice(0, 6);
+  const castsMembers = casts.slice(0, 7);
 
   const notExpandedStyle =
     "flex gap-2 w-full overflow-x-scroll lg:scrollbar-thumb-zinc-600 lg:scrollbar-thin relative";
@@ -35,7 +35,7 @@ function Casts({ casts }) {
       <div className={isExpanded ? expandedStyle : notExpandedStyle}>
         {castsMembers.map((cast) => (
           <motion.div layout="position" key={cast.id}>
-            <div className="text-zinc-50 relative w-40 lg:w-20 xl:w-36 2xl:w-40 h-auto flex flex-col justify-end rounded-lg overflow-hidden">
+            <div className="text-zinc-50 relative w-40 lg:w-20 xl:w-28 2xl:w-40 h-auto flex flex-col justify-end rounded-lg overflow-hidden">
               <img
                 src={
                   cast.profile_path
